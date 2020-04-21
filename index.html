@@ -42,15 +42,13 @@
         background: #eee;
       }
       .chat-container {
-        overflow: auto;
+        overflow: hidden;
       }
     </style>
   </head>
   <body>
-    <label style="font-size: 16px; font-weight: bold;" for=""
-      >Digite seu user:
-    </label>
-    <input style="padding: 10px;" type="text" id="user" required />
+    <label for="user">Digite seu nome</label>
+    <input type="text" id="user">
     <div class="chat-container">
       <ul id="messages"></ul>
     </div>
@@ -65,16 +63,19 @@
       var socket = io();
       $("form").submit(function (e) {
         e.preventDefault(); // prevents page reloading
-        socket.emit("chat message", $("#m").val());
+        const value = {
+          user: $("#user").val(),
+          msg: $("#m").val()
+        }
+        socket.emit("chat message",value);
         $("#m").val("");
         return false;
       });
-      socket.on("chat message", function (msg) {
-        var user = $("#user").val();
-        if(!user){
-          user = "desconhecido"
+      socket.on("chat message", function (data) {
+        if(!data.user){
+          data.user = "desconhecido"
         }
-        $("#messages").append($("<li>").text(`${user}: ${msg}`));
+        $("#messages").append($("<li>").text(`${data.user}: ${data.msg}`));
       });
     });
   </script>
