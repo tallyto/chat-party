@@ -7,22 +7,20 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+  io.emit("entrou", { message: "entrou na sala" });
 
-  io.emit('entrou', {message: "entrou na sala"})
-  
   socket.on("disconnect", () => {
-    io.emit('disconnect', {message: "saiu da sala"})
+    io.emit("disconnect", { message: "saiu da sala" });
   });
 });
 
-
-io.on('connection', (socket) => {
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+io.on("connection", (socket) => {
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", msg);
   });
 });
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 
 http.listen(PORT, () => {
   console.log("listening on *:3000");
