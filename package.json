@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
+}
