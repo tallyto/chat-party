@@ -19,12 +19,12 @@
   </head>
   <body">
     <label for="user">Digite seu nome</label>
-    <input type="text" id="user" />  
+    <input type="text" id="user" maxlength="15"/>  
     <div class="container">   
       <ul id="messages"></ul>
     </div>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" autocomplete="off" maxlength="140" /><button>Send</button>
     </form>
   </body">
   <script src="/socket.io/socket.io.js"></script>
@@ -34,6 +34,10 @@
       var socket = io();
       $("form").submit(function (e) {
         e.preventDefault(); // prevents page reloading
+        if(!$("#m").val().trim()){
+          alert("Você não pode enviar uma mensagem em branco")
+          return false
+        }
         const value = {
           user: $("#user").val(),
           msg: $("#m").val(),
@@ -41,6 +45,7 @@
         socket.emit("chat message", value);
         $("#m").val("");
         return false;
+       
       });
       socket.on("chat message", function (data) {
         if (!data.user) {
