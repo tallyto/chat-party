@@ -7,10 +7,14 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
+
+  io.emit('entrou', {message: "entrou na sala"})
+  
   socket.on("disconnect", () => {
     io.emit('disconnect', {message: "saiu da sala"})
   });
 });
+
 
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {

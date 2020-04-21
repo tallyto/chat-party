@@ -47,7 +47,7 @@
         return false;
        
       });
-      
+
       socket.on("chat message", function (data) {
         if (!data.user) {
           data.user = "desconhecido";
@@ -55,6 +55,12 @@
         $("#messages").append($("<li>").text(`${data.user}: ${data.msg}`));
           window.scrollTo(0, document.body.scrollHeight);
       });
+
+      socket.on("entrou", function(data){
+        $("#messages").append($("<li>").text(data.message));
+          window.scrollTo(0, document.body.scrollHeight);
+      }) 
+
 
       socket.on("disconnect", function(data){
         $("#messages").append($("<li>").text(data.message));
