@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Chat Party</title>
     <style>
       * {
         margin: 0;
@@ -47,27 +47,35 @@
     </style>
   </head>
   <body>
+    <label style="font-size: 16px; font-weight: bold;" for=""
+      >Digite seu user:
+    </label>
+    <input style="padding: 10px;" type="text" id="user" required />
     <div class="chat-container">
       <ul id="messages"></ul>
-      <form action="">
-        <input id="m" autocomplete="off" /><button>Send</button>
-      </form>
-    </div>   
+    </div>
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
   </body>
   <script src="/socket.io/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-  $(function () {
-    var socket = io();
-    $('form').submit(function(e){
-      e.preventDefault(); // prevents page reloading
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
-      return false;
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script>
+    $(function () {
+      var socket = io();
+      $("form").submit(function (e) {
+        e.preventDefault(); // prevents page reloading
+        socket.emit("chat message", $("#m").val());
+        $("#m").val("");
+        return false;
+      });
+      socket.on("chat message", function (msg) {
+        var user = $("#user").val();
+        if(!user){
+          user = "desconhecido"
+        }
+        $("#messages").append($("<li>").text(`${user}: ${msg}`));
+      });
     });
-    socket.on('chat message', function(msg){
-      $('#messages').append($('<li>').text(msg));
-    });
-  });
-</script>
+  </script>
 </html>
