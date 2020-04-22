@@ -74,17 +74,10 @@
               msg: $("#m").val(),
             };
 
-            socket.emit("send message", {
-              room: (conversation_id = 1),
-              message: "Some message",
-            });
-
             socket.emit("chat message", value);
             $("#m").val("");
             return false;
-          });
-
- 
+          }); 
 
           socket.on("chat message", function (data) {
             if (!data.user) {
